@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>PSU Online Admission Requirements Form</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -15,7 +15,7 @@
   ============================= -->
   <div class="popup-overlay" id="popupRequired">
     <div class="popup-box">
-      <div class="popup-icon">&#9888;</div>
+      <div class="popup-icon">⚠️</div>
       <h3>Required Fields Incomplete</h3>
       <p>Please fill up all required fields marked with <span class="asterisk">*</span> before proceeding to the next step.</p>
       <button class="popup-btn" onclick="closePopup('popupRequired')">OK, Got it</button>
@@ -29,20 +29,31 @@
     <div class="popup-box">
       <div class="popup-header" id="popupReqHeader"></div>
       <div class="popup-note">
-        &#128247; <strong>Note:</strong> Please take a screenshot of these requirements for your reference.
+        📷 <strong>Note:</strong> Please take a screenshot of these requirements for your reference.
       </div>
       <ul class="req-list" id="popupReqList"></ul>
       <button class="popup-btn" onclick="closePopup('popupReqs')">OK, I Got It</button>
     </div>
   </div>
 
+  <!-- ============================
+       POPUP: Control Number Required
+  ============================= -->
+  <div class="popup-overlay" id="popupControlRequired">
+    <div class="popup-box">
+      <div class="popup-icon">⚠️</div>
+      <h3>Control Number Required</h3>
+      <p>Please check the "New applicant" checkbox to generate your Control Number before proceeding.</p>
+      <button class="popup-btn" onclick="closePopup('popupControlRequired')">OK, Got it</button>
+    </div>
+  </div>
+
   <!-- University Header -->
   <div class="university-header">
-     <img src="logo.jpg" alt="PSU Logo" class="logo">
+    <img src="logo.jpg" alt="PSU Logo" class="logo">
     <span>Partido State University</span>
   </div>
   <div class="gold-bar"></div>
-
 
   <!-- Step Tabs -->
   <div class="steps-bar">
@@ -54,17 +65,18 @@
   <div class="card">
     <div class="card-inner">
 
-      <div class="form-title"> Online Admission Requirements Form</div>
+      <div class="form-title">Online Admission Requirements Form</div>
 
       <!-- New Applicant Checkbox + Control No -->
-      <div class="new-applicant">
+      <div class="new-applicant" id="newApplicantSection">
         <input type="checkbox" id="newApplicantCheck" onchange="toggleControlNo()">
-        <label for="newApplicantCheck">New applicant</label>
+        <label for="newApplicantCheck">New applicant <span class="asterisk">*</span></label>
       </div>
+      <div class="hint" id="hNewApplicant" style="text-align: center; margin-bottom: 5px;"></div>
       <div class="control-row" id="controlRow">
         <span class="control-no">Control No: <span id="ctrlNo"></span></span>
         <div class="control-notice">
-          &#128247; Please <strong>take note</strong> or <strong>screenshot</strong> your Control No. — you will need it to check for <strong>Approval</strong>, <strong>Exam Result</strong>, and your <strong>Login ID &amp; Password</strong>.
+          📷 Please <strong>take note</strong> or <strong>screenshot</strong> your Control No. — you will need it to check for <strong>Approval</strong>, <strong>Exam Result</strong>, and your <strong>Login ID &amp; Password</strong>.
         </div>
       </div>
 
@@ -78,20 +90,21 @@
         <div class="row2">
           <div class="field">
             <label>Last Name <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pLastName" placeholder="e.g. dela Cruz">
+            <input type="text" class="caps" id="pLastName" placeholder="e.g. DELA CRUZ">
             <div class="hint" id="hLastName"></div>
           </div>
           <div class="field">
-            <label>Middle Name <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pMiddleName" placeholder="">
+            <label>First Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pFirstName" placeholder="e.g. JUAN">
+            <div class="hint" id="hFirstName"></div>
           </div>
         </div>
 
         <div class="row2">
           <div class="field">
-            <label>First Name <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pFirstName" placeholder="e.g. Juan">
-            <div class="hint" id="hFirstName"></div>
+            <label>Middle Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pMiddleName" placeholder="e.g. SANTOS">
+            <div class="hint" id="hMiddleName"></div>
           </div>
           <div class="field">
             <label>Name Extension (e.g., Jr.)</label>
@@ -102,7 +115,7 @@
         <div class="row2">
           <div class="field">
             <label>Date of Birth (MM/DD/YYYY) <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pDOB" placeholder="MM/DD/YYYY">
+            <input type="text" class="caps" id="pDOB" placeholder="MM/DD/YYYY" maxlength="10">
             <div class="hint" id="hDOB"></div>
           </div>
           <div class="sex-field">
@@ -151,12 +164,12 @@
         <div class="row2">
           <div class="field">
             <label>Country <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pCountry" placeholder="e.g. Philippines">
+            <input type="text" class="caps" id="pCountry" placeholder="e.g. PHILIPPINES">
             <div class="hint" id="hCountry"></div>
           </div>
           <div class="field">
             <label>Region <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pRegion" placeholder="">
+            <input type="text" class="caps" id="pRegion" placeholder="e.g. REGION V">
             <div class="hint" id="hRegion"></div>
           </div>
         </div>
@@ -164,12 +177,12 @@
         <div class="row2">
           <div class="field">
             <label>Province <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pProvince" placeholder="">
+            <input type="text" class="caps" id="pProvince" placeholder="e.g. CAMARINES SUR">
             <div class="hint" id="hProvince"></div>
           </div>
           <div class="field">
             <label>Municipality <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pMunicipality" placeholder="">
+            <input type="text" class="caps" id="pMunicipality" placeholder="e.g. GOA">
             <div class="hint" id="hMunicipality"></div>
           </div>
         </div>
@@ -198,7 +211,7 @@
           </div>
           <div class="field">
             <label>Cellphone No. <span class="asterisk">*</span></label>
-            <input type="text" id="pCellNo" placeholder="e.g. 09XXXXXXXXX">
+            <input type="text" id="pCellNo" maxlength="11" placeholder="e.g. 09XXXXXXXXX">
             <div class="hint" id="hCellNo"></div>
           </div>
         </div>
@@ -222,7 +235,7 @@
           </div>
           <div class="field">
             <label>Citizenship <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="pCitizenship" placeholder="e.g. Filipino">
+            <input type="text" class="caps" id="pCitizenship" placeholder="e.g. FILIPINO">
             <div class="hint" id="hCitizenship"></div>
           </div>
         </div>
@@ -237,26 +250,30 @@
       ================================================= -->
       <div class="step-page" id="page2">
         <div class="section-title">2. Family Background</div>
+        <p class="req-note"><span class="asterisk">*</span> Indicates required fields</p>
 
         <div class="subsection">Father</div>
         <div class="row2">
           <div class="field">
             <label>Last Name <span class="asterisk">*</span></label>
             <input type="text" class="caps" id="fLastName" placeholder="">
+            <div class="hint" id="hFLastName"></div>
           </div>
           <div class="field">
-            <label>Middle Name <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="fMiddleName" placeholder="">
+            <label>First Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="fFirstName" placeholder="">
+            <div class="hint" id="hFFirstName"></div>
           </div>
         </div>
         <div class="row2">
           <div class="field">
-            <label>First Name <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="fFirstName" placeholder="">
+            <label>Middle Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="fMiddleName" placeholder="">
+            <div class="hint" id="hFMiddleName"></div>
           </div>
           <div class="field">
-            <label>CP No.</label>
-            <input type="text" id="fCP" placeholder="">
+            <label>CP No. (max 11 digits)</label>
+            <input type="text" id="fCP" maxlength="11" placeholder="09XXXXXXXXX">
           </div>
         </div>
         <div class="row2">
@@ -268,10 +285,10 @@
             <label>Annual Income</label>
             <select id="fIncome">
               <option value="">-- Select --</option>
-              <option>Below &#8369;50,000</option>
-              <option>&#8369;50,000 &#8211; &#8369;100,000</option>
-              <option>&#8369;100,001 &#8211; &#8369;200,000</option>
-              <option>Above &#8369;200,000</option>
+              <option>Below ₱50,000</option>
+              <option>₱50,000 – ₱100,000</option>
+              <option>₱100,001 – ₱200,000</option>
+              <option>Above ₱200,000</option>
             </select>
           </div>
         </div>
@@ -281,20 +298,23 @@
           <div class="field">
             <label>Last Name <span class="asterisk">*</span></label>
             <input type="text" class="caps" id="mLastName" placeholder="">
+            <div class="hint" id="hMLastName"></div>
           </div>
           <div class="field">
-            <label>Middle Name <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="mMiddleName" placeholder="">
+            <label>First Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="mFirstName" placeholder="">
+            <div class="hint" id="hMFirstName"></div>
           </div>
         </div>
         <div class="row2">
           <div class="field">
-            <label>First Name <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="mFirstName" placeholder="">
+            <label>Middle Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="mMiddleName" placeholder="">
+            <div class="hint" id="hMMiddleName"></div>
           </div>
           <div class="field">
-            <label>CP No.</label>
-            <input type="text" id="mCP" placeholder="">
+            <label>CP No. (max 11 digits)</label>
+            <input type="text" id="mCP" maxlength="11" placeholder="09XXXXXXXXX">
           </div>
         </div>
         <div class="row2">
@@ -306,10 +326,10 @@
             <label>Annual Income</label>
             <select id="mIncome">
               <option value="">-- Select --</option>
-              <option>Below &#8369;50,000</option>
-              <option>&#8369;50,000 &#8211; &#8369;100,000</option>
-              <option>&#8369;100,001 &#8211; &#8369;200,000</option>
-              <option>Above &#8369;200,000</option>
+              <option>Below ₱50,000</option>
+              <option>₱50,000 – ₱100,000</option>
+              <option>₱100,001 – ₱200,000</option>
+              <option>Above ₱200,000</option>
             </select>
           </div>
         </div>
@@ -318,11 +338,13 @@
         <div class="field full">
           <label>Complete Name <span class="asterisk">*</span></label>
           <input type="text" class="caps" id="gName" placeholder="">
+          <div class="hint" id="hGName"></div>
         </div>
         <div class="row2">
           <div class="field">
             <label>CP No. <span class="asterisk">*</span></label>
-            <input type="text" id="gCP" placeholder="">
+            <input type="text" id="gCP" maxlength="11" placeholder="09XXXXXXXXX">
+            <div class="hint" id="hGCP"></div>
           </div>
           <div class="field">
             <label>Relationship <span class="asterisk">*</span></label>
@@ -334,6 +356,7 @@
               <option>Aunt/Uncle</option>
               <option>Other</option>
             </select>
+            <div class="hint" id="hGRelationship"></div>
           </div>
         </div>
 
@@ -348,6 +371,7 @@
       ================================================= -->
       <div class="step-page" id="page3">
         <div class="section-title">3. Admission Data</div>
+        <p class="req-note"><span class="asterisk">*</span> Indicates required fields</p>
 
         <div class="row2">
           <div class="field">
@@ -373,94 +397,121 @@
           </div>
         </div>
 
-        <!-- Required Docs Box (shown after selecting type) -->
+        <!-- Instruction Message based on selection -->
+        <div id="instructionMessage" class="instruction-message" style="display: none;"></div>
+
+        <!-- Required Docs Box -->
         <div class="docs-section" id="docsSection">
           <div class="docs-header">
             Required Documents &nbsp;
             <span class="docs-type-label" id="docsTypeLabel"></span>
           </div>
           <div class="docs-info" id="docsInfo"></div>
-          <button class="view-req-btn" onclick="showReqPopup()">&#128196; View Requirements</button>
+          <button class="view-req-btn" onclick="showReqPopup()">📄 View Requirements</button>
         </div>
 
         <div class="notice-red">"Please do NOT abbreviate the name of school below."</div>
 
-        <div class="row2">
-          <div class="field">
-            <label>Name of School <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="sSchoolName" placeholder="">
-            <div class="hint" id="hSchoolName"></div>
+        <!-- HIGH SCHOOL SECTION (for Freshman and ALS Graduate) -->
+        <div id="highSchoolSection">
+          <div class="subsection">High School / Senior High School</div>
+          <div class="row2">
+            <div class="field">
+              <label>Name of School <span class="asterisk" id="schoolNameAsterisk">*</span></label>
+              <input type="text" class="caps" id="sSchoolName" placeholder="">
+              <div class="hint" id="hSchoolName"></div>
+            </div>
+            <div class="field">
+              <label>Address of School <span class="asterisk" id="schoolAddrAsterisk">*</span></label>
+              <input type="text" class="caps" id="sSchoolAddr" placeholder="">
+              <div class="hint" id="hSchoolAddr"></div>
+            </div>
           </div>
-          <div class="field">
-            <label>Address of School <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="sSchoolAddr" placeholder="">
-            <div class="hint" id="hSchoolAddr"></div>
+
+          <div class="row2">
+            <div class="field">
+              <label>Strand <span class="asterisk" id="strandAsterisk">*</span></label>
+              <input type="text" class="caps" id="sStrand" placeholder="e.g. STEM, ABM">
+              <div class="hint" id="hStrand"></div>
+            </div>
+            <div class="field">
+              <label>Year Graduated <span class="asterisk" id="yearGradAsterisk">*</span></label>
+              <input type="text" id="sYearGrad" placeholder="YYYY" maxlength="4">
+              <div class="hint" id="hYearGrad"></div>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label>G.W.A – General Weighted Average <span class="asterisk" id="gwaAsterisk">*</span></label>
+            <input type="text" id="sGWA" placeholder="e.g. 89.5 or 1.75">
+            <div class="hint" id="hGWA"></div>
           </div>
         </div>
 
-        <div class="row2">
-          <div class="field">
-            <label>Strand</label>
-            <input type="text" class="caps" id="sStrand" placeholder="">
+        <!-- LAST SCHOOL ATTENDED SECTION (for Transferee, Shifter, Returnee) -->
+        <div id="lastSchoolSection">
+          <div class="subsection">Last School Attended</div>
+          <div class="row2">
+            <div class="field">
+              <label>Name of School <span class="asterisk" id="lastSchoolNameAsterisk">*</span></label>
+              <input type="text" class="caps" id="tSchoolName" placeholder="">
+              <div class="hint" id="hTSchoolName"></div>
+            </div>
+            <div class="field">
+              <label>Address of School <span class="asterisk" id="lastSchoolAddrAsterisk">*</span></label>
+              <input type="text" class="caps" id="tSchoolAddr" placeholder="">
+              <div class="hint" id="hTSchoolAddr"></div>
+            </div>
           </div>
-          <div class="field">
-            <label>Year Graduated</label>
-            <input type="text" id="sYearGrad" placeholder="">
+          <div class="row2">
+            <div class="field">
+              <label>Program <span class="asterisk" id="programAsterisk">*</span></label>
+              <input type="text" class="caps" id="tProgram" placeholder="">
+              <div class="hint" id="hTProgram"></div>
+            </div>
+            <div class="field">
+              <label>Last Year Attended <span class="asterisk" id="lastYearAsterisk">*</span></label>
+              <input type="text" id="tLastYear" placeholder="YYYY">
+              <div class="hint" id="hTLastYear"></div>
+            </div>
           </div>
-        </div>
-
-        <div class="field full">
-          <label>G.W.A &#8211; General Weighted Average</label>
-          <input type="text" id="sGWA" placeholder="">
-        </div>
-
-        <div class="subsection">Last School Attended (For Transferees)</div>
-        <div class="row2">
-          <div class="field">
-            <label>Name of School</label>
-            <input type="text" class="caps" id="tSchoolName" placeholder="">
+          <div class="row2">
+            <div class="field">
+              <label>Last Year Level <span class="asterisk" id="lastLevelAsterisk">*</span></label>
+              <input type="text" id="tLastLevel" placeholder="e.g. 1st Year">
+              <div class="hint" id="hTLastLevel"></div>
+            </div>
+            <div class="field">
+              <label>G.W.A – General Weighted Average <span class="asterisk" id="lastGwaAsterisk">*</span></label>
+              <input type="text" id="tGWA" placeholder="e.g. 85.5 or 2.00">
+              <div class="hint" id="hTGWA"></div>
+            </div>
           </div>
-          <div class="field">
-            <label>Address of School</label>
-            <input type="text" class="caps" id="tSchoolAddr" placeholder="">
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label>Program</label>
-            <input type="text" class="caps" id="tProgram" placeholder="">
-          </div>
-          <div class="field">
-            <label>Last Year Attended (Ex: 2025)</label>
-            <input type="text" id="tLastYear" placeholder="">
-          </div>
-        </div>
-        <div class="field full">
-          <label>Last Year Level (Ex: 1)</label>
-          <input type="text" id="tLastLevel" placeholder="">
         </div>
 
         <div class="subsection">Incoming Year Level</div>
         <div class="row2">
           <div class="field">
-            <label>Year Level (Ex: 1)</label>
-            <input type="text" id="iYearLevel" placeholder="">
+            <label>Year Level <span class="asterisk">*</span></label>
+            <input type="text" id="iYearLevel" placeholder="e.g. 1, 2, 3, 4">
+            <div class="hint" id="hYearLevel"></div>
           </div>
           <div class="field">
-            <label>Learner's Ref. No.</label>
-            <input type="text" id="iLRN" placeholder="">
+            <label>Learner's Ref. No. <span class="asterisk" id="lrnAsterisk">*</span></label>
+            <input type="text" id="iLRN" placeholder="LRN (12 digits)">
+            <div class="hint" id="hLRN"></div>
           </div>
         </div>
         <div class="field full">
           <label>Campus <span class="asterisk">*</span></label>
-          <input type="text" class="caps" id="iCampus" placeholder="">
+          <input type="text" class="caps" id="iCampus" placeholder="e.g. MAIN CAMPUS">
           <div class="hint" id="hCampus"></div>
         </div>
 
         <div class="row2">
           <div class="field">
             <label>1. Preferred Course <span class="asterisk">*</span></label>
-            <input type="text" class="caps" id="c1" placeholder="">
+            <input type="text" class="caps" id="c1" placeholder="e.g. BS INFORMATICS">
             <div class="hint" id="hC1"></div>
           </div>
           <div class="field">
