@@ -1,0 +1,30 @@
+package com.system.sias.controller;
+
+import com.system.sias.dto.AdmissionDto;
+import com.system.sias.dto.ApiResponse;
+import com.system.sias.service.ApplicationService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/admissions")
+@AllArgsConstructor
+
+public class AdmissionController {
+
+    private ApplicationService applicationService;
+
+    @PostMapping("/apply/{studentId}")
+    public ResponseEntity<ApiResponse<AdmissionDto>> applyForAdmission(@PathVariable Long studentId) {
+        AdmissionDto admissionDto = applicationService.applyForAdmission(studentId);
+        return new ResponseEntity<>(new ApiResponse<>(true, "Admission application submitted", admissionDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<ApiResponse<AdmissionDto>> updateStatus(@PathVariable Long id, @RequestParam String status) {
+        AdmissionDto updated = applicationService.updateAdmissionStatus(id, status);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Admission status updated to " + status, updated));
+    }
+}
