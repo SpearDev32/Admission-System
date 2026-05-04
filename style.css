@@ -1,0 +1,574 @@
+/* ===========================
+   PSU Online Admission Form
+   style.css
+=========================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f2f5;
+  padding: 24px 16px;
+  min-height: 100vh;
+}
+
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+/* ============================
+   POPUP OVERLAYS
+============================ */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-overlay.open {
+  display: flex;
+}
+
+.popup-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 28px 28px;
+  max-width: 400px;
+  width: 92%;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+  animation: popIn 0.2s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.popup-icon {
+  font-size: 40px;
+  color: #e67e22;
+  margin-bottom: 10px;
+}
+
+.popup-box h3 {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.popup-box p {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Requirements popup — left-aligned */
+.popup-header {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0d47a1;
+  text-align: left;
+  border-bottom: 2px solid #0d47a1;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.popup-note {
+  background: #fffbe6;
+  border: 1px solid #ffcc00;
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: #7a5200;
+  line-height: 1.5;
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.req-list {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.req-list li {
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.popup-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 10px;
+  background: #0d47a1;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.popup-btn:hover {
+  background: #0d47a1;
+}
+
+/* ============================
+   UNIVERSITY HEADER
+============================ */
+.university-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0d47a1;
+  padding: 12px 18px;
+  border-radius: 10px 10px 0 0;
+}
+
+.uni-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0d47a1;
+  flex-shrink: 0;
+}
+
+.university-header span {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.gold-bar {
+  height: 6px;
+  background: linear-gradient(90deg, #c9a227, #f0c040, #c9a227);
+}
+
+/* ============================
+   STEP TABS
+============================ */
+.steps-bar {
+  display: flex;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.step-tab {
+  flex: 1;
+  padding: 10px 6px;
+  font-size: 11px;
+  text-align: center;
+  color: #aaa;
+  border-bottom: 2px solid transparent;
+  line-height: 1.3;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.step-tab.active {
+  color: #0d47a1;
+  border-bottom-color: #0d47a1;
+  font-weight: 700;
+  background: #fff;
+}
+
+.step-tab.done {
+  color: #adb5bd;
+}
+
+/* ============================
+   CARD
+============================ */
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0 0 10px 10px;
+}
+
+.card-inner {
+  padding: 22px 24px;
+}
+
+/* ============================
+   FORM HEADER
+============================ */
+.form-title {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.new-applicant {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.new-applicant input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #1a3a6b;
+  cursor: pointer;
+}
+
+.new-applicant label {
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+}
+
+/* Control Number — hidden by default */
+.control-row {
+  display: none;
+  text-align: center;
+  margin-bottom: 14px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.control-no {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a3a6b;
+  text-decoration: underline;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.control-notice {
+  background: #fffbe6;
+  border: 1px solid #f0c040;
+  border-radius: 6px;
+  padding: 9px 14px;
+  font-size: 12px;
+  color: #7a5200;
+  line-height: 1.6;
+}
+
+/* ============================
+   SECTION & SUBSECTION TITLES
+============================ */
+.section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111;
+  border-bottom: 2px solid #1a3a6b;
+  padding-bottom: 5px;
+  margin-bottom: 8px;
+}
+
+.req-note {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+.subsection {
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  color: #222;
+  background: #f0f2f5;
+  padding: 7px;
+  border-radius: 6px;
+  margin: 16px 0 12px;
+}
+
+.notice-red {
+  font-size: 12px;
+  color: #c0392b;
+  font-style: italic;
+  text-align: center;
+  margin: 6px 0 12px;
+  font-weight: 700;
+}
+
+/* ============================
+   ASTERISK
+============================ */
+.asterisk {
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+/* ============================
+   REQUIRED DOCS SECTION (Step 3)
+============================ */
+.docs-section {
+  display: none;
+  background: #eaf2ff;
+  border: 1px solid #aac4e8;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  animation: fadeIn 0.25s ease;
+}
+
+.docs-header {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a3a6b;
+  margin-bottom: 6px;
+}
+
+.docs-type-label {
+  display: inline-block;
+  background: #1a3a6b;
+  color: #fff;
+  font-size: 11px;
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-left: 4px;
+  font-weight: 600;
+}
+
+.docs-info {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+.view-req-btn {
+  padding: 8px 18px;
+  background: #1a3a6b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.view-req-btn:hover {
+  background: #14305a;
+}
+
+/* ============================
+   GRID LAYOUTS
+============================ */
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* ============================
+   FORM FIELDS
+============================ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field.full {
+  margin-bottom: 12px;
+}
+
+.field label,
+.sex-field > label {
+  font-size: 11px;
+  color: #555;
+  font-weight: 600;
+}
+
+.field input,
+.field select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fafafa;
+  color: #222;
+  font-size: 13px;
+  width: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #1a3a6b;
+  box-shadow: 0 0 0 3px rgba(26, 58, 107, 0.12);
+  background: #fff;
+}
+
+.field input.err,
+.field select.err {
+  border-color: #e74c3c;
+  background: #fff8f8;
+}
+
+/* ============================
+   HINT / ERROR TEXT
+============================ */
+.hint {
+  font-size: 11px;
+  color: #e74c3c;
+  min-height: 14px;
+}
+
+/* ============================
+   SEX RADIO ROW
+============================ */
+.sex-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.radio-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fafafa;
+}
+
+.radio-row.err {
+  border-color: #e74c3c;
+  background: #fff8f8;
+}
+
+.radio-row label {
+  font-size: 13px;
+  color: #222;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.radio-row input[type="radio"] {
+  accent-color: #1a3a6b;
+  width: 14px;
+  height: 14px;
+}
+
+/* ============================
+   CONFIRM ROW
+============================ */
+.confirm-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #333;
+  margin: 14px 0 4px;
+}
+
+.confirm-row input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #1a3a6b;
+  cursor: pointer;
+}
+
+.confirm-row label {
+  cursor: pointer;
+}
+
+/* ============================
+   BUTTONS
+============================ */
+.btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-next {
+  padding: 11px 48px;
+  background: #1a3a6b;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.btn-next:hover { background: #14305a; }
+.btn-next:active { transform: scale(0.97); }
+
+.btn-back {
+  padding: 11px 32px;
+  background: #e8e8e8;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-back:hover { background: #d8d8d8; }
+
+/* ============================
+   STEP PAGES
+============================ */
+.step-page {
+  display: none;
+}
+
+.step-page.active {
+  display: block;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 480px) {
+  .row2 { grid-template-columns: 1fr; }
+  .card-inner { padding: 16px; }
+  .step-tab { font-size: 10px; padding: 8px 4px; }
+}
