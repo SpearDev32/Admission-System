@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PSU Online Admission Requirements Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+  
+  <!-- ============================
+       POPUP: Required Fields
+  ============================= -->
+  <div class="popup-overlay" id="popupRequired">
+    <div class="popup-box">
+      <div class="popup-icon">&#9888;</div>
+      <h3>Required Fields Incomplete</h3>
+      <p>Please fill up all required fields marked with <span class="asterisk">*</span> before proceeding to the next step.</p>
+      <button class="popup-btn" onclick="closePopup('popupRequired')">OK, Got it</button>
+    </div>
+  </div>
+
+  <!-- ============================
+       POPUP: Requirements per Type
+  ============================= -->
+  <div class="popup-overlay" id="popupReqs">
+    <div class="popup-box">
+      <div class="popup-header" id="popupReqHeader"></div>
+      <div class="popup-note">
+        &#128247; <strong>Note:</strong> Please take a screenshot of these requirements for your reference.
+      </div>
+      <ul class="req-list" id="popupReqList"></ul>
+      <button class="popup-btn" onclick="closePopup('popupReqs')">OK, I Got It</button>
+    </div>
+  </div>
+
+  <!-- University Header -->
+  <div class="university-header">
+     <img src="logo.jpg" alt="PSU Logo" class="logo">
+    <span>Partido State University</span>
+  </div>
+  <div class="gold-bar"></div>
+
+
+  <!-- Step Tabs -->
+  <div class="steps-bar">
+    <div class="step-tab active" id="tab1">Step 1 of 3: Personal Data</div>
+    <div class="step-tab" id="tab2">Step 2 of 3: Family Background</div>
+    <div class="step-tab" id="tab3">Step 3 of 3: Admission Data</div>
+  </div>
+
+  <div class="card">
+    <div class="card-inner">
+
+      <div class="form-title"> Online Admission Requirements Form</div>
+
+      <!-- New Applicant Checkbox + Control No -->
+      <div class="new-applicant">
+        <input type="checkbox" id="newApplicantCheck" onchange="toggleControlNo()">
+        <label for="newApplicantCheck">New applicant</label>
+      </div>
+      <div class="control-row" id="controlRow">
+        <span class="control-no">Control No: <span id="ctrlNo"></span></span>
+        <div class="control-notice">
+          &#128247; Please <strong>take note</strong> or <strong>screenshot</strong> your Control No. — you will need it to check for <strong>Approval</strong>, <strong>Exam Result</strong>, and your <strong>Login ID &amp; Password</strong>.
+        </div>
+      </div>
+
+      <!-- ================================================
+           STEP 1: Personal Data
+      ================================================= -->
+      <div class="step-page active" id="page1">
+        <div class="section-title">1. Personal Data</div>
+        <p class="req-note"><span class="asterisk">*</span> Indicates required fields</p>
+        
+        <div class="row2">
+          <div class="field">
+            <label>Last Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pLastName" placeholder="e.g. dela Cruz">
+            <div class="hint" id="hLastName"></div>
+          </div>
+          <div class="field">
+            <label>Middle Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pMiddleName" placeholder="">
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>First Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pFirstName" placeholder="e.g. Juan">
+            <div class="hint" id="hFirstName"></div>
+          </div>
+          <div class="field">
+            <label>Name Extension (e.g., Jr.)</label>
+            <input type="text" class="caps" id="pNameExt" placeholder="">
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Date of Birth (MM/DD/YYYY) <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pDOB" placeholder="MM/DD/YYYY">
+            <div class="hint" id="hDOB"></div>
+          </div>
+          <div class="sex-field">
+            <label>Sex <span class="asterisk">*</span></label>
+            <div class="radio-row" id="sexRow">
+              <label><input type="radio" name="sex" value="Male"> Male</label>
+              <label><input type="radio" name="sex" value="Female"> Female</label>
+            </div>
+            <div class="hint" id="hSex"></div>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Religion</label>
+            <select id="pReligion">
+              <option value="">-- Select --</option>
+              <option>Roman Catholic</option>
+              <option>Islam</option>
+              <option>Iglesia ni Cristo</option>
+              <option>Born Again Christian</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Civil Status <span class="asterisk">*</span></label>
+            <select id="pCivilStatus">
+              <option value="">-- Select --</option>
+              <option>Single</option>
+              <option>Married</option>
+              <option>Widowed</option>
+              <option>Separated</option>
+            </select>
+            <div class="hint" id="hCivilStatus"></div>
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Birth Place <span class="asterisk">*</span></label>
+          <input type="text" class="caps" id="pBirthPlace" placeholder="City/Municipality, Province">
+          <div class="hint" id="hBirthPlace"></div>
+        </div>
+
+        <div class="subsection">Home Address</div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Country <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pCountry" placeholder="e.g. Philippines">
+            <div class="hint" id="hCountry"></div>
+          </div>
+          <div class="field">
+            <label>Region <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pRegion" placeholder="">
+            <div class="hint" id="hRegion"></div>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Province <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pProvince" placeholder="">
+            <div class="hint" id="hProvince"></div>
+          </div>
+          <div class="field">
+            <label>Municipality <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pMunicipality" placeholder="">
+            <div class="hint" id="hMunicipality"></div>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Barangay <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pBarangay" placeholder="">
+            <div class="hint" id="hBarangay"></div>
+          </div>
+          <div class="field">
+            <label>Street</label>
+            <input type="text" class="caps" id="pStreet" placeholder="">
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>Temporary Address</label>
+          <input type="text" class="caps" id="pTempAddr" placeholder="">
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Tel. No.</label>
+            <input type="text" id="pTelNo" placeholder="">
+          </div>
+          <div class="field">
+            <label>Cellphone No. <span class="asterisk">*</span></label>
+            <input type="text" id="pCellNo" placeholder="e.g. 09XXXXXXXXX">
+            <div class="hint" id="hCellNo"></div>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Email Address <span class="asterisk">*</span></label>
+            <input type="email" id="pEmail" placeholder="e.g. juan@email.com">
+            <div class="hint" id="hEmail"></div>
+          </div>
+          <div class="field">
+            <label>Member of Cultural</label>
+            <input type="text" class="caps" id="pCultural" placeholder="">
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Indigenous Group</label>
+            <input type="text" class="caps" id="pIndigenous" placeholder="">
+          </div>
+          <div class="field">
+            <label>Citizenship <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="pCitizenship" placeholder="e.g. Filipino">
+            <div class="hint" id="hCitizenship"></div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-next" onclick="goStep(2)">Next</button>
+        </div>
+      </div><!-- end page1 -->
+
+      <!-- ================================================
+           STEP 2: Family Background
+      ================================================= -->
+      <div class="step-page" id="page2">
+        <div class="section-title">2. Family Background</div>
+
+        <div class="subsection">Father</div>
+        <div class="row2">
+          <div class="field">
+            <label>Last Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="fLastName" placeholder="">
+          </div>
+          <div class="field">
+            <label>Middle Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="fMiddleName" placeholder="">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>First Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="fFirstName" placeholder="">
+          </div>
+          <div class="field">
+            <label>CP No.</label>
+            <input type="text" id="fCP" placeholder="">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Occupation</label>
+            <input type="text" class="caps" id="fOccupation" placeholder="">
+          </div>
+          <div class="field">
+            <label>Annual Income</label>
+            <select id="fIncome">
+              <option value="">-- Select --</option>
+              <option>Below &#8369;50,000</option>
+              <option>&#8369;50,000 &#8211; &#8369;100,000</option>
+              <option>&#8369;100,001 &#8211; &#8369;200,000</option>
+              <option>Above &#8369;200,000</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="subsection">Mother's Maiden Name</div>
+        <div class="row2">
+          <div class="field">
+            <label>Last Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="mLastName" placeholder="">
+          </div>
+          <div class="field">
+            <label>Middle Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="mMiddleName" placeholder="">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>First Name <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="mFirstName" placeholder="">
+          </div>
+          <div class="field">
+            <label>CP No.</label>
+            <input type="text" id="mCP" placeholder="">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Occupation</label>
+            <input type="text" class="caps" id="mOccupation" placeholder="">
+          </div>
+          <div class="field">
+            <label>Annual Income</label>
+            <select id="mIncome">
+              <option value="">-- Select --</option>
+              <option>Below &#8369;50,000</option>
+              <option>&#8369;50,000 &#8211; &#8369;100,000</option>
+              <option>&#8369;100,001 &#8211; &#8369;200,000</option>
+              <option>Above &#8369;200,000</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="subsection">Guardian</div>
+        <div class="field full">
+          <label>Complete Name <span class="asterisk">*</span></label>
+          <input type="text" class="caps" id="gName" placeholder="">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>CP No. <span class="asterisk">*</span></label>
+            <input type="text" id="gCP" placeholder="">
+          </div>
+          <div class="field">
+            <label>Relationship <span class="asterisk">*</span></label>
+            <select id="gRelationship">
+              <option value="">-- Select --</option>
+              <option>Parent</option>
+              <option>Sibling</option>
+              <option>Grandparent</option>
+              <option>Aunt/Uncle</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-back" onclick="goStep(1)">Back</button>
+          <button class="btn-next" onclick="goStep(3)">Next</button>
+        </div>
+      </div><!-- end page2 -->
+
+      <!-- ================================================
+           STEP 3: Admission Data
+      ================================================= -->
+      <div class="step-page" id="page3">
+        <div class="section-title">3. Admission Data</div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Admission for <span class="asterisk">*</span></label>
+            <select id="admFor">
+              <option value="">-- Select --</option>
+              <option>College</option>
+              <option>Graduate School</option>
+            </select>
+            <div class="hint" id="hAdmFor"></div>
+          </div>
+          <div class="field">
+            <label>As <span class="asterisk">*</span></label>
+            <select id="admAs" onchange="onApplicantTypeChange()">
+              <option value="">-- Select --</option>
+              <option value="Freshman">Freshman</option>
+              <option value="Transferee">Transferee</option>
+              <option value="Shifter">Shifter</option>
+              <option value="Returnee">Returnee</option>
+              <option value="PEPT/ALS Graduate">PEPT/ALS Graduate</option>
+            </select>
+            <div class="hint" id="hAdmAs"></div>
+          </div>
+        </div>
+
+        <!-- Required Docs Box (shown after selecting type) -->
+        <div class="docs-section" id="docsSection">
+          <div class="docs-header">
+            Required Documents &nbsp;
+            <span class="docs-type-label" id="docsTypeLabel"></span>
+          </div>
+          <div class="docs-info" id="docsInfo"></div>
+          <button class="view-req-btn" onclick="showReqPopup()">&#128196; View Requirements</button>
+        </div>
+
+        <div class="notice-red">"Please do NOT abbreviate the name of school below."</div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Name of School <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="sSchoolName" placeholder="">
+            <div class="hint" id="hSchoolName"></div>
+          </div>
+          <div class="field">
+            <label>Address of School <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="sSchoolAddr" placeholder="">
+            <div class="hint" id="hSchoolAddr"></div>
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>Strand</label>
+            <input type="text" class="caps" id="sStrand" placeholder="">
+          </div>
+          <div class="field">
+            <label>Year Graduated</label>
+            <input type="text" id="sYearGrad" placeholder="">
+          </div>
+        </div>
+
+        <div class="field full">
+          <label>G.W.A &#8211; General Weighted Average</label>
+          <input type="text" id="sGWA" placeholder="">
+        </div>
+
+        <div class="subsection">Last School Attended (For Transferees)</div>
+        <div class="row2">
+          <div class="field">
+            <label>Name of School</label>
+            <input type="text" class="caps" id="tSchoolName" placeholder="">
+          </div>
+          <div class="field">
+            <label>Address of School</label>
+            <input type="text" class="caps" id="tSchoolAddr" placeholder="">
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label>Program</label>
+            <input type="text" class="caps" id="tProgram" placeholder="">
+          </div>
+          <div class="field">
+            <label>Last Year Attended (Ex: 2025)</label>
+            <input type="text" id="tLastYear" placeholder="">
+          </div>
+        </div>
+        <div class="field full">
+          <label>Last Year Level (Ex: 1)</label>
+          <input type="text" id="tLastLevel" placeholder="">
+        </div>
+
+        <div class="subsection">Incoming Year Level</div>
+        <div class="row2">
+          <div class="field">
+            <label>Year Level (Ex: 1)</label>
+            <input type="text" id="iYearLevel" placeholder="">
+          </div>
+          <div class="field">
+            <label>Learner's Ref. No.</label>
+            <input type="text" id="iLRN" placeholder="">
+          </div>
+        </div>
+        <div class="field full">
+          <label>Campus <span class="asterisk">*</span></label>
+          <input type="text" class="caps" id="iCampus" placeholder="">
+          <div class="hint" id="hCampus"></div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label>1. Preferred Course <span class="asterisk">*</span></label>
+            <input type="text" class="caps" id="c1" placeholder="">
+            <div class="hint" id="hC1"></div>
+          </div>
+          <div class="field">
+            <label>2. Second Course</label>
+            <input type="text" class="caps" id="c2" placeholder="">
+          </div>
+        </div>
+        <div class="field full">
+          <label>3. Third Course</label>
+          <input type="text" class="caps" id="c3" placeholder="">
+        </div>
+
+        <div class="confirm-row">
+          <input type="checkbox" id="confirmCheck">
+          <label for="confirmCheck">Confirm that the information above is correct</label>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-back" onclick="goStep(2)">Back</button>
+          <button class="btn-next" onclick="submitForm()">Submit</button>
+        </div>
+      </div><!-- end page3 -->
+
+    </div><!-- card-inner -->
+  </div><!-- card -->
+</div><!-- wrap -->
+
+<script src="script.js"></script>
+</body>
+</html>
