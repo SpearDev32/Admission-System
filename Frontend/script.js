@@ -16,14 +16,14 @@ capsInputs.forEach(input => {
 // ============================
 const dobInput = document.getElementById('pDOB');
 if (dobInput) {
-  dobInput.addEventListener('input', function(e) {
+  dobInput.addEventListener('input', function (e) {
     let value = this.value.replace(/\D/g, '');
     if (value.length >= 2 && value.length < 4) {
-      this.value = value.slice(0,2) + '/' + value.slice(2);
+      this.value = value.slice(0, 2) + '/' + value.slice(2);
     } else if (value.length >= 4 && value.length < 8) {
-      this.value = value.slice(0,2) + '/' + value.slice(2,4) + '/' + value.slice(4,8);
+      this.value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
     } else if (value.length >= 8) {
-      this.value = value.slice(0,2) + '/' + value.slice(2,4) + '/' + value.slice(4,8);
+      this.value = value.slice(0, 2) + '/' + value.slice(2, 4) + '/' + value.slice(4, 8);
     } else {
       this.value = value;
     }
@@ -47,7 +47,7 @@ function toggleControlNo() {
   const checkbox = document.getElementById('newApplicantCheck');
   const controlRow = document.getElementById('controlRow');
   const hint = document.getElementById('hNewApplicant');
-  
+
   if (checkbox.checked) {
     document.getElementById('ctrlNo').textContent = generateControlNumber();
     controlRow.style.display = 'block';
@@ -72,12 +72,13 @@ function closePopup(id) {
 }
 
 document.querySelectorAll('.popup-overlay').forEach(overlay => {
-  overlay.addEventListener('click', function(e) {
+  overlay.addEventListener('click', function (e) {
     if (e.target === this) {
       this.classList.remove('open');
     }
   });
 });
+
 
 // ============================
 //  HELPER: SET ERROR
@@ -101,16 +102,15 @@ function setErr(inputId, hintId, message) {
 // ============================
 function showInstructionMessage(type) {
   const messageDiv = document.getElementById('instructionMessage');
-  
+
   if (!type) {
     messageDiv.style.display = 'none';
     return;
   }
-  
+
   let message = '';
-  let icon = '📋';
-  
-  switch(type) {
+
+  switch (type) {
     case 'Freshman':
       message = 'You selected as a FRESHMAN. Please fill out the "High School / Senior High School" section below. The "Last School Attended" section is not required for you.';
       break;
@@ -124,17 +124,16 @@ function showInstructionMessage(type) {
       message = 'You selected as a SHIFTER. Please fill out the "Last School Attended" section below. The "High School / Senior High School" section is not required for you.';
       break;
     case 'Returnee':
-      message = 'You selected as a RETURNE. Please fill out the "Last School Attended" section below. The "High School / Senior High School" section is not required for you.';
+      message = 'You selected as a RETURNEE. Please fill out the "Last School Attended" section below. The "High School / Senior High School" section is not required for you.';
       break;
     default:
       messageDiv.style.display = 'none';
       return;
   }
-  
+
   messageDiv.innerHTML = message;
   messageDiv.style.display = 'flex';
-  
-  // Auto hide after 8 seconds
+
   setTimeout(() => {
     if (messageDiv.style.display === 'flex') {
       messageDiv.style.opacity = '0.8';
@@ -148,136 +147,63 @@ function showInstructionMessage(type) {
 
 // ============================
 //  TOGGLE FIELDS BASED ON APPLICANT TYPE
-//  Both sections visible, but fields are disabled based on selection
 // ============================
 function toggleFieldsByType() {
   const type = document.getElementById('admAs').value;
-  
-  // Determine if user is Freshman or ALS Graduate
+
   const isFreshmanOrALS = (type === 'Freshman' || type === 'PEPT/ALS Graduate');
-  // Determine if user is Transferee, Shifter, or Returnee
   const isTransShifterReturnee = (type === 'Transferee' || type === 'Shifter' || type === 'Returnee');
-  
-  // High School section fields
+
   const hsFields = ['sSchoolName', 'sSchoolAddr', 'sStrand', 'sYearGrad', 'sGWA'];
-  // Last School Attended section fields
   const lsFields = ['tSchoolName', 'tSchoolAddr', 'tProgram', 'tLastYear', 'tLastLevel', 'tGWA'];
-  
-  // LRN field
+
   const lrnField = document.getElementById('iLRN');
   const lrnAsterisk = document.getElementById('lrnAsterisk');
-  
-  // Show instruction message
+
   showInstructionMessage(type);
-  
+
   if (isFreshmanOrALS) {
-    // Enable High School section, disable Last School section
     hsFields.forEach(fieldId => {
       const field = document.getElementById(fieldId);
-      if (field) {
-        field.disabled = false;
-        field.required = true;
-        // Remove visual disabled style
-        field.style.opacity = '1';
-        field.style.background = '#fafafa';
-      }
+      if (field) { field.disabled = false; field.required = true; field.style.opacity = '1'; field.style.background = '#fafafa'; }
     });
-    
     lsFields.forEach(fieldId => {
       const field = document.getElementById(fieldId);
-      if (field) {
-        field.disabled = true;
-        field.required = false;
-        field.classList.remove('err');
-        field.style.opacity = '0.6';
-        field.style.background = '#e8e8e8';
-        // Clear any error messages
-        const hintId = 'hT' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1).replace('GWA', 'GWA');
-        const hint = document.getElementById(hintId);
-        if (hint) hint.textContent = '';
-      }
+      if (field) { field.disabled = true; field.required = false; field.classList.remove('err'); field.style.opacity = '0.6'; field.style.background = '#e8e8e8'; }
     });
-    
-    // LRN is required for Freshman/ALS
-    lrnField.disabled = false;
-    lrnField.required = true;
-    lrnAsterisk.style.display = 'inline';
-    lrnField.style.opacity = '1';
-    lrnField.style.background = '#fafafa';
-    
+    lrnField.disabled = false; lrnField.required = true; lrnAsterisk.style.display = 'inline'; lrnField.style.opacity = '1'; lrnField.style.background = '#fafafa';
+
   } else if (isTransShifterReturnee) {
-    // Disable High School section, enable Last School section
     hsFields.forEach(fieldId => {
       const field = document.getElementById(fieldId);
-      if (field) {
-        field.disabled = true;
-        field.required = false;
-        field.classList.remove('err');
-        field.style.opacity = '0.6';
-        field.style.background = '#e8e8e8';
-        // Clear any error messages
-        const hintId = 'h' + fieldId.charAt(0).toUpperCase() + fieldId.slice(1);
-        const hint = document.getElementById(hintId);
-        if (hint) hint.textContent = '';
-      }
+      if (field) { field.disabled = true; field.required = false; field.classList.remove('err'); field.style.opacity = '0.6'; field.style.background = '#e8e8e8'; }
     });
-    
     lsFields.forEach(fieldId => {
       const field = document.getElementById(fieldId);
-      if (field) {
-        field.disabled = false;
-        field.required = true;
-        field.style.opacity = '1';
-        field.style.background = '#fafafa';
-      }
+      if (field) { field.disabled = false; field.required = true; field.style.opacity = '1'; field.style.background = '#fafafa'; }
     });
-    
-    // LRN is NOT required for Transferee/Shifter/Returnee
-    lrnField.disabled = false;
-    lrnField.required = false;
-    lrnAsterisk.style.display = 'none';
-    lrnField.style.opacity = '1';
-    lrnField.style.background = '#fafafa';
-    // Clear any LRN error
+    lrnField.disabled = false; lrnField.required = false; lrnAsterisk.style.display = 'none'; lrnField.style.opacity = '1'; lrnField.style.background = '#fafafa';
     setErr('iLRN', 'hLRN', '');
-    
+
   } else {
-    // No type selected - enable both sections but show message to select
     hsFields.forEach(fieldId => {
       const field = document.getElementById(fieldId);
-      if (field) {
-        field.disabled = false;
-        field.required = true;
-        field.style.opacity = '1';
-        field.style.background = '#fafafa';
-      }
+      if (field) { field.disabled = false; field.required = true; field.style.opacity = '1'; field.style.background = '#fafafa'; }
     });
-    
     lsFields.forEach(fieldId => {
       const field = document.getElementById(fieldId);
-      if (field) {
-        field.disabled = false;
-        field.required = true;
-        field.style.opacity = '1';
-        field.style.background = '#fafafa';
-      }
+      if (field) { field.disabled = false; field.required = true; field.style.opacity = '1'; field.style.background = '#fafafa'; }
     });
-    
-    lrnField.disabled = false;
-    lrnField.required = true;
-    lrnAsterisk.style.display = 'inline';
-    lrnField.style.opacity = '1';
-    lrnField.style.background = '#fafafa';
+    lrnField.disabled = false; lrnField.required = true; lrnAsterisk.style.display = 'inline'; lrnField.style.opacity = '1'; lrnField.style.background = '#fafafa';
   }
 }
 
 // ============================
-//  STEP 1 VALIDATION (including Control Number)
+//  STEP 1 VALIDATION
 // ============================
 function validateStep1() {
   let hasError = false;
-  
-  // Check if "New applicant" checkbox is checked
+
   const newApplicantCheck = document.getElementById('newApplicantCheck');
   if (!newApplicantCheck.checked) {
     const hint = document.getElementById('hNewApplicant');
@@ -288,7 +214,7 @@ function validateStep1() {
     const hint = document.getElementById('hNewApplicant');
     if (hint) hint.textContent = '';
   }
-  
+
   hasError = setErr('pLastName', 'hLastName', !document.getElementById('pLastName').value.trim() ? 'Last name is required.' : '') || hasError;
   hasError = setErr('pFirstName', 'hFirstName', !document.getElementById('pFirstName').value.trim() ? 'First name is required.' : '') || hasError;
   hasError = setErr('pMiddleName', 'hMiddleName', !document.getElementById('pMiddleName').value.trim() ? 'Middle name is required.' : '') || hasError;
@@ -302,14 +228,12 @@ function validateStep1() {
   hasError = setErr('pBarangay', 'hBarangay', !document.getElementById('pBarangay').value.trim() ? 'Barangay is required.' : '') || hasError;
   hasError = setErr('pCellNo', 'hCellNo', !document.getElementById('pCellNo').value.trim() ? 'Cellphone number is required.' : '') || hasError;
   hasError = setErr('pCitizenship', 'hCitizenship', !document.getElementById('pCitizenship').value.trim() ? 'Citizenship is required.' : '') || hasError;
-  
-  // Cellphone exactly 11 digits validation
+
   const cellNo = document.getElementById('pCellNo').value.trim();
   if (cellNo && !/^\d{11}$/.test(cellNo)) {
     hasError = setErr('pCellNo', 'hCellNo', 'Cellphone number must be exactly 11 digits.') || hasError;
   }
-  
-  // Sex radio
+
   const sexSelected = document.querySelector('input[name="sex"]:checked');
   const sexRow = document.getElementById('sexRow');
   const sexHint = document.getElementById('hSex');
@@ -321,8 +245,7 @@ function validateStep1() {
     sexRow.classList.remove('err');
     sexHint.textContent = '';
   }
-  
-  // Email validation
+
   const email = document.getElementById('pEmail').value.trim();
   if (!email) {
     hasError = setErr('pEmail', 'hEmail', 'Email address is required.') || hasError;
@@ -331,11 +254,8 @@ function validateStep1() {
   } else {
     setErr('pEmail', 'hEmail', '');
   }
-  
-  if (hasError) {
-    openPopup('popupRequired');
-    return false;
-  }
+
+  if (hasError) { openPopup('popupRequired'); return false; }
   return true;
 }
 
@@ -344,7 +264,7 @@ function validateStep1() {
 // ============================
 function validateStep2() {
   let hasError = false;
-  
+
   hasError = setErr('fLastName', 'hFLastName', !document.getElementById('fLastName').value.trim() ? "Father's last name is required." : '') || hasError;
   hasError = setErr('fFirstName', 'hFFirstName', !document.getElementById('fFirstName').value.trim() ? "Father's first name is required." : '') || hasError;
   hasError = setErr('fMiddleName', 'hFMiddleName', !document.getElementById('fMiddleName').value.trim() ? "Father's middle name is required." : '') || hasError;
@@ -354,33 +274,29 @@ function validateStep2() {
   hasError = setErr('gName', 'hGName', !document.getElementById('gName').value.trim() ? "Guardian's complete name is required." : '') || hasError;
   hasError = setErr('gCP', 'hGCP', !document.getElementById('gCP').value.trim() ? "Guardian's CP No. is required." : '') || hasError;
   hasError = setErr('gRelationship', 'hGRelationship', !document.getElementById('gRelationship').value ? "Relationship is required." : '') || hasError;
-  
+
   const guardianCP = document.getElementById('gCP').value.trim();
   if (guardianCP && !/^\d{11}$/.test(guardianCP)) {
     hasError = setErr('gCP', 'hGCP', 'Guardian CP No. must be exactly 11 digits.') || hasError;
   }
-  
-  if (hasError) {
-    openPopup('popupRequired');
-    return false;
-  }
+
+  if (hasError) { openPopup('popupRequired'); return false; }
   return true;
 }
 
 // ============================
-//  STEP 3 VALIDATION (conditional based on type)
+//  STEP 3 VALIDATION
 // ============================
 function validateStep3() {
   let hasError = false;
   const type = document.getElementById('admAs').value;
   const isFreshmanOrALS = (type === 'Freshman' || type === 'PEPT/ALS Graduate');
   const isTransShifterReturnee = (type === 'Transferee' || type === 'Shifter' || type === 'Returnee');
-  
+
   hasError = setErr('admFor', 'hAdmFor', !document.getElementById('admFor').value ? 'Please select admission type.' : '') || hasError;
   hasError = setErr('admAs', 'hAdmAs', !type ? 'Please select applicant category.' : '') || hasError;
-  
+
   if (isFreshmanOrALS) {
-    // Validate High School section fields (only if not disabled)
     if (!document.getElementById('sSchoolName').disabled) {
       hasError = setErr('sSchoolName', 'hSchoolName', !document.getElementById('sSchoolName').value.trim() ? 'Name of school is required.' : '') || hasError;
       hasError = setErr('sSchoolAddr', 'hSchoolAddr', !document.getElementById('sSchoolAddr').value.trim() ? 'Address of school is required.' : '') || hasError;
@@ -388,15 +304,12 @@ function validateStep3() {
       hasError = setErr('sYearGrad', 'hYearGrad', !document.getElementById('sYearGrad').value.trim() ? 'Year graduated is required.' : '') || hasError;
       hasError = setErr('sGWA', 'hGWA', !document.getElementById('sGWA').value.trim() ? 'G.W.A. is required.' : '') || hasError;
     }
-    
-    // LRN is required for Freshman/ALS
     hasError = setErr('iLRN', 'hLRN', !document.getElementById('iLRN').value.trim() ? "Learner's Reference No. is required." : '') || hasError;
     const lrn = document.getElementById('iLRN').value.trim();
     if (lrn && !/^\d{12}$/.test(lrn)) {
-      hasError = setErr('iLRN', 'hLRN', 'Learner\'s Reference No. must be 12 digits.') || hasError;
+      hasError = setErr('iLRN', 'hLRN', "Learner's Reference No. must be 12 digits.") || hasError;
     }
   } else if (isTransShifterReturnee) {
-    // Validate Last School Attended section fields
     if (!document.getElementById('tSchoolName').disabled) {
       hasError = setErr('tSchoolName', 'hTSchoolName', !document.getElementById('tSchoolName').value.trim() ? 'Last school name is required.' : '') || hasError;
       hasError = setErr('tSchoolAddr', 'hTSchoolAddr', !document.getElementById('tSchoolAddr').value.trim() ? 'Last school address is required.' : '') || hasError;
@@ -405,26 +318,16 @@ function validateStep3() {
       hasError = setErr('tLastLevel', 'hTLastLevel', !document.getElementById('tLastLevel').value.trim() ? 'Last year level is required.' : '') || hasError;
       hasError = setErr('tGWA', 'hTGWA', !document.getElementById('tGWA').value.trim() ? 'G.W.A. from last school is required.' : '') || hasError;
     }
-    
-    // LRN is NOT required - clear any error
     setErr('iLRN', 'hLRN', '');
   } else {
-    // No type selected, show error for selection first
-    if (!type) {
-      openPopup('popupRequired');
-      return false;
-    }
+    if (!type) { openPopup('popupRequired'); return false; }
   }
-  
-  // Common required fields for all types
+
   hasError = setErr('iYearLevel', 'hYearLevel', !document.getElementById('iYearLevel').value.trim() ? 'Incoming year level is required.' : '') || hasError;
   hasError = setErr('iCampus', 'hCampus', !document.getElementById('iCampus').value.trim() ? 'Campus is required.' : '') || hasError;
   hasError = setErr('c1', 'hC1', !document.getElementById('c1').value.trim() ? 'Preferred course is required.' : '') || hasError;
-  
-  if (hasError) {
-    openPopup('popupRequired');
-    return false;
-  }
+
+  if (hasError) { openPopup('popupRequired'); return false; }
   return true;
 }
 
@@ -434,10 +337,10 @@ function validateStep3() {
 function goStep(n) {
   if (n === 2 && !validateStep1()) return;
   if (n === 3 && !validateStep2()) return;
-  
+
   document.querySelectorAll('.step-page').forEach(p => p.classList.remove('active'));
   document.getElementById('page' + n).classList.add('active');
-  
+
   for (let i = 1; i <= 3; i++) {
     const tab = document.getElementById('tab' + i);
     tab.classList.remove('active', 'done');
@@ -490,7 +393,6 @@ function onApplicantTypeChange() {
   } else {
     docsSection.style.display = 'none';
   }
-  
   toggleFieldsByType();
 }
 
@@ -512,15 +414,120 @@ function showReqPopup() {
 }
 
 // ============================
-//  SUBMIT FORM
+//  SUBMIT FORM — connected to Spring Boot API
 // ============================
-function submitForm() {
+const API_BASE = "http://localhost:8080";
+
+async function submitForm() {
+  // 1. Validation Checks
   if (!validateStep3()) return;
   if (!document.getElementById('confirmCheck').checked) {
     alert('Please check the confirmation box before submitting.');
     return;
   }
-  alert('Application submitted successfully!\n\nThank you for applying to Partido State University.\nPlease wait for further instructions.');
+
+  const controlNo = document.getElementById('ctrlNo').textContent.trim();
+  const type = document.getElementById('admAs').value;
+  const isFreshmanOrALS = (type === 'Freshman' || type === 'PEPT/ALS Graduate');
+
+  // 2. The Clustered Payload (Must match your ApplicationDTO structure)
+  const payload = {
+    controlNo: controlNo,
+
+    // Matches ApplicationDTO.personalData
+    personalData: {
+      lastName:      document.getElementById('pLastName').value.trim(),
+      firstName:     document.getElementById('pFirstName').value.trim(),
+      middleName:    document.getElementById('pMiddleName').value.trim(),
+      nameExt:       document.getElementById('pNameExt').value.trim(),
+      dob:           document.getElementById('pDOB').value,
+      sex:           document.querySelector('input[name="sex"]:checked')?.value || '',
+      religion:      document.getElementById('pReligion').value,
+      civilStatus:   document.getElementById('pCivilStatus').value,
+      birthPlace:    document.getElementById('pBirthPlace').value.trim(),
+      country:       document.getElementById('pCountry').value.trim(),
+      region:        document.getElementById('pRegion').value.trim(),
+      province:      document.getElementById('pProvince').value.trim(),
+      municipality:  document.getElementById('pMunicipality').value.trim(),
+      barangay:      document.getElementById('pBarangay').value.trim(),
+      street:        document.getElementById('pStreet').value.trim(),
+      tempAddress:   document.getElementById('pTempAddr').value.trim(),
+      telNo:         document.getElementById('pTelNo').value.trim(),
+      cellNo:        document.getElementById('pCellNo').value.trim(),
+      email:         document.getElementById('pEmail').value.trim(),
+      cultural:      document.getElementById('pCultural').value.trim(),
+      indigenous:    document.getElementById('pIndigenous').value.trim(),
+      citizenship:   document.getElementById('pCitizenship').value.trim()
+    },
+
+    // Matches ApplicationDTO.familyData
+    familyData: {
+      fatherLastName:   document.getElementById('fLastName').value.trim(),
+      fatherFirstName:  document.getElementById('fFirstName').value.trim(),
+      fatherMiddleName: document.getElementById('fMiddleName').value.trim(),
+      fatherCpNo:       document.getElementById('fCP').value.trim(),
+      fatherOccupation: document.getElementById('fOccupation').value.trim(),
+      fatherIncome:     document.getElementById('fIncome').value,
+      motherLastName:   document.getElementById('mLastName').value.trim(),
+      motherFirstName:  document.getElementById('mFirstName').value.trim(),
+      motherMiddleName: document.getElementById('mMiddleName').value.trim(),
+      motherCpNo:       document.getElementById('mCP').value.trim(),
+      motherOccupation: document.getElementById('mOccupation').value.trim(),
+      motherIncome:     document.getElementById('mIncome').value,
+      guardianName:     document.getElementById('gName').value.trim(),
+      guardianCpNo:     document.getElementById('gCP').value.trim(),
+      guardianRelationship: document.getElementById('gRelationship').value
+    },
+
+    // Matches ApplicationDTO.admissionData
+    admissionData: {
+      admissionFor:      document.getElementById('admFor').value,
+      applicantType:     type,
+      incomingYearLevel: document.getElementById('iYearLevel').value.trim(),
+      lrn:               document.getElementById('iLRN').value.trim(),
+      campus:            document.getElementById('iCampus').value.trim(),
+      course1:           document.getElementById('c1').value.trim(),
+      course2:           document.getElementById('c2').value.trim(),
+      course3:           document.getElementById('c3').value.trim(),
+      hsName:            isFreshmanOrALS ? document.getElementById('sSchoolName').value.trim() : '',
+      hsAddr:            isFreshmanOrALS ? document.getElementById('sSchoolAddr').value.trim() : '',
+      hsStrand:          isFreshmanOrALS ? document.getElementById('sStrand').value.trim() : '',
+      hsYearGrad:        isFreshmanOrALS ? document.getElementById('sYearGrad').value.trim() : '',
+      hsGwa:             isFreshmanOrALS ? document.getElementById('sGWA').value.trim() : '',
+      prevSchoolName:    !isFreshmanOrALS ? document.getElementById('tSchoolName').value.trim() : '',
+      prevProgram:       !isFreshmanOrALS ? document.getElementById('tProgram').value.trim() : '',
+      prevGwa:           !isFreshmanOrALS ? document.getElementById('tGWA').value.trim() : ''
+    }
+  };
+
+  // 3. UI Feedback
+  const submitBtn = document.querySelector('#page3 .btn-next');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Submitting...';
+  submitBtn.disabled = true;
+
+  // 4. The API Call
+  try {
+    const response = await fetch('http://localhost:8080/api/v1/admissions/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      alert('Application submitted successfully!');
+      location.reload(); 
+    } else {
+      const errorMsg = await response.text();
+      alert('Submission failed: ' + errorMsg);
+    }
+  } catch (error) {
+    alert('Server Connection Error: Is Spring Boot running?');
+    console.error(error);
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
 }
 
 // ============================
@@ -537,7 +544,7 @@ const allValidationFields = [
   { id: 'gCP', hint: 'hGCP' }, { id: 'gRelationship', hint: 'hGRelationship' }, { id: 'admFor', hint: 'hAdmFor' },
   { id: 'admAs', hint: 'hAdmAs' }, { id: 'sSchoolName', hint: 'hSchoolName' }, { id: 'sSchoolAddr', hint: 'hSchoolAddr' },
   { id: 'sStrand', hint: 'hStrand' }, { id: 'sYearGrad', hint: 'hYearGrad' }, { id: 'sGWA', hint: 'hGWA' },
-  { id: 'iYearLevel', hint: 'hYearLevel' }, { id: 'iLRN', hint: 'hLRN' }, { id: 'iCampus', hint: 'hCampus' }, 
+  { id: 'iYearLevel', hint: 'hYearLevel' }, { id: 'iLRN', hint: 'hLRN' }, { id: 'iCampus', hint: 'hCampus' },
   { id: 'c1', hint: 'hC1' }, { id: 'tSchoolName', hint: 'hTSchoolName' }, { id: 'tSchoolAddr', hint: 'hTSchoolAddr' },
   { id: 'tProgram', hint: 'hTProgram' }, { id: 'tLastYear', hint: 'hTLastYear' }, { id: 'tLastLevel', hint: 'hTLastLevel' },
   { id: 'tGWA', hint: 'hTGWA' }
@@ -547,7 +554,7 @@ allValidationFields.forEach(pair => {
   const el = document.getElementById(pair.id);
   if (!el) return;
   const evt = (el.tagName === 'SELECT') ? 'change' : 'input';
-  el.addEventListener(evt, function() {
+  el.addEventListener(evt, function () {
     if (this.value && this.value.trim() !== '') {
       this.classList.remove('err');
       const hint = document.getElementById(pair.hint);
@@ -556,7 +563,6 @@ allValidationFields.forEach(pair => {
   });
 });
 
-// Sex radio clear error
 document.querySelectorAll('input[name="sex"]').forEach(radio => {
   radio.addEventListener('change', () => {
     document.getElementById('sexRow').classList.remove('err');
@@ -564,37 +570,15 @@ document.querySelectorAll('input[name="sex"]').forEach(radio => {
   });
 });
 
-// Initialize field visibility - both sections visible with fields enabled
-document.addEventListener('DOMContentLoaded', function() {
-  // Initially, both sections are visible with fields enabled
+document.addEventListener('DOMContentLoaded', function () {
   const hsFields = ['sSchoolName', 'sSchoolAddr', 'sStrand', 'sYearGrad', 'sGWA'];
   const lsFields = ['tSchoolName', 'tSchoolAddr', 'tProgram', 'tLastYear', 'tLastLevel', 'tGWA'];
-  
-  hsFields.forEach(fieldId => {
+
+  [...hsFields, ...lsFields].forEach(fieldId => {
     const field = document.getElementById(fieldId);
-    if (field) {
-      field.disabled = false;
-      field.required = true;
-      field.style.opacity = '1';
-      field.style.background = '#fafafa';
-    }
+    if (field) { field.disabled = false; field.required = true; field.style.opacity = '1'; field.style.background = '#fafafa'; }
   });
-  
-  lsFields.forEach(fieldId => {
-    const field = document.getElementById(fieldId);
-    if (field) {
-      field.disabled = false;
-      field.required = true;
-      field.style.opacity = '1';
-      field.style.background = '#fafafa';
-    }
-  });
-  
+
   const lrnField = document.getElementById('iLRN');
-  if (lrnField) {
-    lrnField.disabled = false;
-    lrnField.required = true;
-    lrnField.style.opacity = '1';
-    lrnField.style.background = '#fafafa';
-  }
+  if (lrnField) { lrnField.disabled = false; lrnField.required = true; lrnField.style.opacity = '1'; lrnField.style.background = '#fafafa'; }
 });
