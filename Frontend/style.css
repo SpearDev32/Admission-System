@@ -1,8 +1,3 @@
-/* ===========================
-   PSU Online Admission Form
-   style.css
-=========================== */
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,7 +16,6 @@ body {
   margin: 0 auto;
 }
 
-/* University Header */
 .university-header {
   display: flex;
   align-items: center;
@@ -57,7 +51,6 @@ body {
   background: linear-gradient(90deg, #c9a227, #f0c040, #c9a227);
 }
 
-/* Step Tabs */
 .steps-bar {
   display: flex;
   background: #f5f5f5;
@@ -79,14 +72,13 @@ body {
   color: #0d47a1;
   border-bottom-color: #0d47a1;
   font-weight: 700;
-  background: #fff;
+  background: #ffffff;
 }
 
 .step-tab.done {
   color: #6c757d;
 }
 
-/* Card */
 .card {
   background: #fff;
   border: 1px solid #ddd;
@@ -184,7 +176,6 @@ body {
   font-weight: 700;
 }
 
-/* Instruction Message */
 .instruction-message {
   background: #e8f5e9;
   border-left: 4px solid #4caf50;
@@ -215,7 +206,6 @@ body {
   }
 }
 
-/* Popup Overlays */
 .popup-overlay {
   display: none;
   position: fixed;
@@ -253,13 +243,13 @@ body {
 
 .popup-box h3 {
   font-size: 16px;
-  color: #222;
+  color: #0d47a1;
   margin-bottom: 10px;
 }
 
 .popup-box p {
   font-size: 13px;
-  color: #555;
+  color: #333;
   line-height: 1.6;
 }
 
@@ -303,15 +293,22 @@ body {
   width: 100%;
   padding: 10px;
   background: #0d47a1;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
-/* Docs Section */
+.popup-btn:hover {
+  background: #1565c0;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.7), 0 0 24px rgba(255, 204, 0, 0.35);
+  transform: translateY(-1px);
+}
+
 .docs-section {
   display: none;
   background: #eaf2ff;
@@ -349,16 +346,22 @@ body {
 
 .view-req-btn {
   padding: 8px 18px;
-  background: #1a3a6b;
-  color: #fff;
+  background: #0d47a1;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   font-size: 12px;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
-/* Grid Layout */
+.view-req-btn:hover {
+  background: #1565c0;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.7), 0 0 24px rgba(255, 204, 0, 0.35);
+  transform: translateY(-1px);
+}
+
 .row2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -374,6 +377,26 @@ body {
 
 .field.full {
   margin-bottom: 12px;
+}
+
+.smart-flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.smart-flex-grid > .field {
+  width: calc(50% - 7.5px);
+  margin-bottom: 0;
+  flex-grow: 1;
+}
+
+.smart-flex-grid > .field.full-width,
+.smart-flex-grid > .field.full {
+  width: 100% !important;
 }
 
 .field label, .sex-field > label {
@@ -446,6 +469,66 @@ body {
   margin: 14px 0 4px;
 }
 
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 16px 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.checkbox-wrapper:hover {
+  background: #eaf2ff;
+}
+
+.checkbox-wrapper label {
+  font-size: 13px;
+  color: #2c3e50;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px !important;
+  height: 18px !important;
+  flex: 0 0 auto !important;
+  margin-right: 8px !important;
+  border: 2px solid #8e9bb0;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox:checked {
+  background-color: #0d47a1;
+  border-color: #0d47a1;
+  box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.15);
+}
+
+.custom-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox:focus {
+  outline: 2px solid rgba(13, 71, 161, 0.35);
+  outline-offset: 2px;
+}
+
 .btn-row {
   display: flex;
   justify-content: center;
@@ -455,29 +538,35 @@ body {
 
 .btn-next {
   padding: 11px 48px;
-  background: #1a3a6b;
-  color: #fff;
+  background: #0d47a1;
+  color: #ffffff;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
 }
 
-.btn-next:hover { background: #14305a; }
+.btn-next:hover {
+  background: #1565c0;
+  box-shadow: 0 0 12px rgba(255, 204, 0, 0.7), 0 0 24px rgba(255, 204, 0, 0.35);
+  transform: translateY(-1px);
+}
 
 .btn-back {
   padding: 11px 32px;
-  background: #e8e8e8;
-  color: #333;
-  border: 1px solid #ccc;
+  background: #adb5bd;
+  color: #ffffff;
+  border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-.btn-back:hover { background: #d8d8d8; }
+.btn-back:hover { background: #9aa3ac; }
 
 .step-page {
   display: none;
@@ -487,15 +576,87 @@ body {
   display: block;
 }
 
-/* Disabled field styling */
 .field input:disabled, .field select:disabled {
-  background: #e8e8e8;
+  background: #f8f9fa;
+  border: 1px dashed #ced4da;
+  color: #8392a5;
+  opacity: 1;
   cursor: not-allowed;
-  opacity: 0.6;
+}
+
+select:invalid,
+select option[value=""] {
+  color: #888;
+}
+select option {
+  color: #333;
+}
+
+.micro-hint {
+  display: block;
+  font-size: 11px;
+  color: #c49000;
+  font-style: italic;
+  margin-top: 2px;
+  margin-bottom: 0;
+  line-height: 1.1;
+}
+
+
+#nationality2Container {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.summary-container {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.summary-section {
+  margin-bottom: 15px;
+}
+
+.summary-section h4 {
+  color: #1a3a6b;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+  font-size: 15px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.summary-item {
+  font-size: 13px;
+}
+
+.summary-item span.label {
+  font-weight: 600;
+  color: #555;
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.summary-item span.value {
+  color: #111;
+  font-weight: 500;
 }
 
 @media (max-width: 480px) {
   .row2 { grid-template-columns: 1fr; }
   .card-inner { padding: 16px; }
   .step-tab { font-size: 10px; padding: 8px 4px; }
+  .summary-grid { grid-template-columns: 1fr; }
 }
